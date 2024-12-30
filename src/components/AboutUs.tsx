@@ -31,7 +31,7 @@ export function AboutUs() {
   const { t } = useTranslation();
 
   return (
-    <section id="about" className=" bg-gradient-to-b dark:bg-gray-900">
+    <section id="about" className="py-24 bg-gradient-to-b dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionTitle title={t('about.title')} subtitle={t('about.subtitle')} />
 
