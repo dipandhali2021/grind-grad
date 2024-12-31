@@ -2,98 +2,25 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CourseCard } from './CourseCard';
 import { CourseModal } from './CourseModal';
+import { ContactModal } from '../navbar/ContactModal';
 import { SectionTitle } from '../shared/SectionTitle';
+import { motion } from 'framer-motion';
+import { getCourses, CourseType } from './courseData';
 
-const getCourses = (t: (key: string) => string) => [
-  {
-    title: t('courses.interviewPrep.title'),
-    description: t('courses.interviewPrep.description'),
-    duration: t('courses.interviewPrep.duration'),
-    schedule: t('courses.interviewPrep.schedule'),
-    price: '$299',
-    curriculum: [
-      {
-        title: t('courses.curriculum.dsa.title'),
-        details: t('courses.curriculum.dsa.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.systemDesign.title'),
-        details: t('courses.curriculum.systemDesign.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.mockInterviews.title'),
-        details: t('courses.curriculum.mockInterviews.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-    ],
-  },
-  {
-    title: t('courses.fullStack.title'),
-    description: t('courses.fullStack.description'),
-    duration: t('courses.fullStack.duration'),
-    schedule: t('courses.fullStack.schedule'),
-    price: '$499',
-    curriculum: [
-      {
-        title: t('courses.curriculum.frontend.title'),
-        details: t('courses.curriculum.frontend.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.backend.title'),
-        details: t('courses.curriculum.backend.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.database.title'),
-        details: t('courses.curriculum.database.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-    ],
-  },
-  {
-    title: t('courses.communication.title'),
-    description: t('courses.communication.description'),
-    duration: t('courses.communication.duration'),
-    schedule: t('courses.communication.schedule'),
-    price: '$199',
-    curriculum: [
-      {
-        title: t('courses.curriculum.business.title'),
-        details: t('courses.curriculum.business.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.speaking.title'),
-        details: t('courses.curriculum.speaking.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-      {
-        title: t('courses.curriculum.email.title'),
-        details: t('courses.curriculum.email.details', {
-          returnObjects: true,
-        }) as string[],
-      },
-    ],
-  },
-];
+const TABS = ['interview', 'regular', 'language', 'spokenEnglish'] as const;
+type TabType = typeof TABS[number];
 
 export function Courses() {
-  const [selectedCourse, setSelectedCourse] = useState<
-    ReturnType<typeof getCourses>[0] | null
-  >(null);
+  const [activeTab, setActiveTab] = useState<TabType>('interview');
+  const [selectedCourse, setSelectedCourse] = useState<CourseType | null>(null);
+  const [showContactModal, setShowContactModal] = useState(false);
   const { t } = useTranslation();
-  const courses = getCourses(t);
+
+  const courses = getCourses(t, activeTab);
+
+  // Split tabs into two rows for mobile
+  const firstRowTabs = TABS.slice(0, 2);
+  const secondRowTabs = TABS.slice(2);
 
   return (
     <section id="courses" className="py-24 bg-white dark:bg-gray-900">
@@ -103,12 +30,52 @@ export function Courses() {
           subtitle={t('courses.subtitle')}
         />
 
+        {/* Mobile tabs (two rows) */}
+        <div className="lg:hidden flex flex-col space-y-4 mb-12">
+          <div className="grid grid-cols-2 gap-4">
+            {firstRowTabs.map((tab) => (
+              <TabButton
+                key={tab}
+                tab={tab}
+                activeTab={activeTab}
+                onClick={() => setActiveTab(tab)}
+                t={t}
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {secondRowTabs.map((tab) => (
+              <TabButton
+                key={tab}
+                tab={tab}
+                activeTab={activeTab}
+                onClick={() => setActiveTab(tab)}
+                t={t}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop tabs (single row) */}
+        <div className="hidden lg:flex justify-center space-x-4 mb-12">
+          {TABS.map((tab) => (
+            <TabButton
+              key={tab}
+              tab={tab}
+              activeTab={activeTab}
+              onClick={() => setActiveTab(tab)}
+              t={t}
+            />
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
           {courses.map((course, index) => (
             <CourseCard
               key={course.title}
               {...course}
-              onClick={() => setSelectedCourse(course)}
+              onViewSyllabus={() => setSelectedCourse(course)}
+              onJoinNow={() => setShowContactModal(true)}
               index={index}
             />
           ))}
@@ -122,6 +89,36 @@ export function Courses() {
           course={selectedCourse}
         />
       )}
+
+      <ContactModal
+        isOpen={showContactModal}
+        onClose={() => setShowContactModal(false)}
+      />
     </section>
+  );
+}
+
+// TabButton component remains the same
+interface TabButtonProps {
+  tab: TabType;
+  activeTab: TabType;
+  onClick: () => void;
+  t: (key: string) => string;
+}
+
+function TabButton({ tab, activeTab, onClick, t }: TabButtonProps) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+      className={`w-full px-4 py-3 rounded-xl font-medium transition-all text-sm sm:text-base ${
+        activeTab === tab
+          ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg'
+          : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+      }`}
+    >
+      {t(`courses.tabs.${tab}`)}
+    </motion.button>
   );
 }

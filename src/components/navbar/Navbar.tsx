@@ -32,11 +32,8 @@ export function Navbar() {
               whileHover={{ scale: 1.05 }}
               className="flex items-center space-x-2"
             >
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 p-2 rounded-xl">
-                <GraduationCap className="h-8 w-8 text-white" />
-              </div>
-              <span className="hidden md:inline text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
-                GrindGrads
+              <span className="md:inline text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              &lt;GrindGrads/&gt;
               </span>
             </motion.button>
 

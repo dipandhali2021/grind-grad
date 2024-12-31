@@ -10,9 +10,10 @@ export const en = {
     badge: 'Transform Your Career Journey',
     title: 'Begin Your Journey to',
     titleEmphasis: 'Success',
-    description:
-      'Graduate with High-Paying Jobs. Stay Ahead with the Latest Trends. Join thousands of successful graduates who transformed their careers with GrindGrads.',
+    description: 'Times are changing. Hiring criteria is changing as well. You want a high paying job?\nthen GRIND!!. Prepare in the right direction in a smart way.',
     exploreCourses: 'Explore Courses',
+    firstLine: 'Are you really job ready?',
+    secondLine: 'If No,\nBegin your GRIND today',
     watchDemo: 'Watch Demo',
   },
   about: {
@@ -70,11 +71,26 @@ export const en = {
   courses: {
     title: 'Our Courses',
     button: 'Learn More',
+    tabs: {
+      interview: 'Interview Courses',
+      regular: 'Regular Courses',
+      language: 'Language Courses',
+      spokenEnglish: 'Spoken English',
+    },
+    viewSyllabus: 'View Syllabus',
+    joinNow: 'Join Now',
     subtitle: 'Comprehensive programs designed for your success',
     curriculumh: 'Course Curriculum',
     enroll: 'Enroll Now for {{price}}',
     interviewPrep: {
       title: 'Interview Preparation',
+      description:
+        'Master technical interviews with real-world practice and expert guidance.',
+      duration: '8 weeks',
+      schedule: 'Flexible timing',
+    },
+    interviewPrep1: {
+      title: 'I1224',
       description:
         'Master technical interviews with real-world practice and expert guidance.',
       duration: '8 weeks',

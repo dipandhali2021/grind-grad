@@ -9,7 +9,8 @@ interface CourseCardProps {
   duration: string;
   schedule: string;
   price: string;
-  onClick: () => void;
+  onViewSyllabus: () => void;
+  onJoinNow: () => void;
   index: number;
 }
 
@@ -19,10 +20,12 @@ export function CourseCard({
   duration,
   schedule,
   price,
-  onClick,
+  onViewSyllabus,
+  onJoinNow,
   index,
 }: CourseCardProps) {
   const { t } = useTranslation();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -30,8 +33,7 @@ export function CourseCard({
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       whileHover={{ y: -5 }}
-      onClick={onClick}
-      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer group"
+      className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
     >
       <div className="p-8">
         <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
@@ -50,17 +52,26 @@ export function CourseCard({
           </div>
         </div>
 
-        <div className="mt-8 flex items-center justify-between">
-          <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-            {price}
-          </span>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg hover:shadow-indigo-500/25 transition-all"
-          >
-            {t('courses.button')}
-          </motion.button>
+        <div className="mt-8">
+         
+          <div className="flex gap-4">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onViewSyllabus}
+              className="flex-1 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white px-6 py-3 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-all"
+            >
+              {t('courses.viewSyllabus')}
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onJoinNow}
+              className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-500 dark:to-purple-500 text-white px-6 py-3 rounded-xl font-medium hover:shadow-lg hover:shadow-indigo-500/25 transition-all"
+            >
+              {t('courses.joinNow')}
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>

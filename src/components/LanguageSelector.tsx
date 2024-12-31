@@ -5,10 +5,7 @@ import { Globe } from 'lucide-react';
 
 const languages = [
   { code: 'en', name: 'English' },
-  { code: 'bn', name: 'বাংলা' },
-  { code: 'hi', name: 'हिंदी' },
-  { code: 'ta', name: 'தமிழ்' },
-  { code: 'te', name: 'తెలుగు' },
+  { code: 'bn', name: 'বাংলা' }
 ];
 
 export function LanguageSelector() {

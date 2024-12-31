@@ -2,33 +2,21 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { TypewriterText } from './TypewriterText';
 
 export function HeroContent() {
   const { t } = useTranslation();
 
   return (
-    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+    <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
+        className="mb-12"
       >
-        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 text-white px-4 py-2 rounded-full mb-8">
-          <Sparkles className="h-4 w-4" />
-          <span className="text-sm font-medium">{t('hero.badge')}</span>
-        </div>
+        <TypewriterText />
       </motion.div>
-
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400"
-      >
-        {t('hero.title')}
-        <br />
-        <span className="text-7xl md:text-8xl">{t('hero.titleEmphasis')}</span>
-      </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }}
